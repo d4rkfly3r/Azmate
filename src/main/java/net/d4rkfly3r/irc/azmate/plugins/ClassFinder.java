@@ -23,13 +23,13 @@ import java.util.stream.Collectors;
 public final class ClassFinder {
 
     private static final String ADDON_DIR = "addons";
-    private JarFileLoader jarFileLoader;
-    private ArrayList<Class<?>> subClasses;
     private static ArrayList<String> excludedLocations = new ArrayList<String>() {{
         add(File.separatorChar + "jre" + File.separatorChar + "lib" + File.separatorChar);
         add("idea_rt.jar");
         add("xalan-2.6.0.jar");
     }};
+    private JarFileLoader jarFileLoader;
+    private ArrayList<Class<?>> subClasses;
 
     public void initialize() {
         jarFileLoader = new JarFileLoader(new URL[]{});
@@ -98,9 +98,9 @@ public final class ClassFinder {
                             try {
                                 Class c = jarFileLoader.loadClass(classname);
                                 thisResult.put(c, url);
-                            } catch(NoClassDefFoundError ignored){
+                            } catch (NoClassDefFoundError ignored) {
 
-                            } catch(Error | Exception ex) {
+                            } catch (Error | Exception ex) {
                                 ex.printStackTrace();
                             }
                         }

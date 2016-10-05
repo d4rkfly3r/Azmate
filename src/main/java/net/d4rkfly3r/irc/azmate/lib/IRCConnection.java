@@ -5,12 +5,14 @@ import javax.annotation.Nullable;
 
 public class IRCConnection implements IRCServerData {
 
+    public static final String ENDLINE = "\n";
     private static final int DEFAULT_PORT = 6667;
-
     private String serverAddress;
     private Integer serverPort;
     private String serverPassword;
     private Boolean serverSecure;
+    private long writeDelay;
+    private IRCUser user;
 
     public IRCConnection(@Nonnull String serverAddress) {
         this(serverAddress, DEFAULT_PORT);
@@ -49,5 +51,33 @@ public class IRCConnection implements IRCServerData {
     @Nonnull
     public Boolean isServerSecure() {
         return this.serverSecure;
+    }
+
+    public long getWriteDelay() {
+        return writeDelay;
+    }
+
+    public void setWriteDelay(long writeDelay) {
+        this.writeDelay = writeDelay;
+    }
+
+    public IRCUser getUser() {
+        return user;
+    }
+
+    public void setUser(IRCUser user) {
+        this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "IRCConnection{" +
+                "serverAddress='" + serverAddress + '\'' +
+                ", serverPort=" + serverPort +
+                ", serverPassword='" + serverPassword + '\'' +
+                ", serverSecure=" + serverSecure +
+                ", writeDelay=" + writeDelay +
+                ", user=" + user +
+                '}';
     }
 }
