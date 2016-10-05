@@ -8,7 +8,7 @@ task wrapper(type: Wrapper) {
 
 apply plugin: 'java'
 
-sourceCompatibility = 1.5
+sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
@@ -16,4 +16,5 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile group: 'com.google.code.findbugs', name: 'findbugs', version: '3.0.1'
 }
