@@ -17,13 +17,10 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.stream.Collectors;
 
-/**
- * Created by d4rkfly3r on 5/22/2016.
- */
 public final class ClassFinder {
 
     private static final String ADDON_DIR = "addons";
-    private static ArrayList<String> excludedLocations = new ArrayList<String>() {{
+    private static final ArrayList<String> excludedLocations = new ArrayList<String>() {{
         add(File.separatorChar + "jre" + File.separatorChar + "lib" + File.separatorChar);
         add("idea_rt.jar");
         add("xalan-2.6.0.jar");

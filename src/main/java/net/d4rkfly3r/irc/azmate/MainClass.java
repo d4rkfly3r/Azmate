@@ -4,12 +4,11 @@ import net.d4rkfly3r.irc.azmate.plugins.PluginBus;
 import net.d4rkfly3r.irc.azmate.plugins.events.PluginInitEvent;
 
 public class MainClass {
-    private final PluginBus pluginBus;
 
     public MainClass() {
-        this.pluginBus = PluginBus.getInstance();
-        this.pluginBus.init();
-        this.pluginBus.fireEvent(new PluginInitEvent(this.pluginBus.plugins));
+        PluginBus pluginBus = PluginBus.getInstance();
+        pluginBus.init();
+        pluginBus.fireEvent(new PluginInitEvent(pluginBus.plugins));
     }
 
     public static void main(String[] args) {

@@ -15,7 +15,7 @@ import java.util.List;
 
 public class PluginBus {
 
-    private static PluginBus ourInstance = new PluginBus();
+    private static final PluginBus ourInstance = new PluginBus();
     public final HashMap<Class<?>, Object> plugins;
     private final ClassFinder classFinder;
 
@@ -30,13 +30,12 @@ public class PluginBus {
     }
 
     @Nonnull
-    public PluginBus fireEvent(@Nonnull Event event) {
+    public void fireEvent(@Nonnull Event event) {
         this.plugins.forEach((aClass, instance) -> {
             List<Method> methods = new ArrayList<>();
             Collections.addAll(methods, aClass.getDeclaredMethods());
             this.invokeMethods(instance, methods, event);
         });
-        return this;
     }
 
     private void invokeMethods(@Nonnull Object instance, @Nonnull List<Method> methods, @Nonnull Event event) {
@@ -56,11 +55,10 @@ public class PluginBus {
     }
 
     @Nonnull
-    public PluginBus fireEventToObject(@Nonnull Object instance, @Nonnull Event event) {
+    public void fireEventToObject(@Nonnull Object instance, @Nonnull Event event) {
         List<Method> methods = new ArrayList<>();
         Collections.addAll(methods, instance.getClass().getDeclaredMethods());
         this.invokeMethods(instance, methods, event);
-        return this;
     }
 
     public void init() {
