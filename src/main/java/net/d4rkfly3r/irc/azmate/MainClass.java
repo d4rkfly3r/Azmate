@@ -8,6 +8,7 @@ public class MainClass {
     public MainClass() {
         PluginBus pluginBus = PluginBus.getInstance();
         pluginBus.init();
+
         pluginBus.fireEvent(new PluginInitEvent(pluginBus.plugins));
     }
 

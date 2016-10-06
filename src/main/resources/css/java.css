@@ -1,0 +1,8 @@
+.icon {
+    -fx-text-fill: rgb(130, 130, 130);
+    -fx-label-padding: 0px 5px;
+}
+
+.title {
+    -fx-text-fill: rgb(130, 130, 130);
+}

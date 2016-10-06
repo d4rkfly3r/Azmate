@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Azmate</title>
+    <link rel="stylesheet" href="css/default.css">
+</head>
+<body>
+
+<div id="window-head" draggable="true">
+    <div id="title">Azmate</div>
+    <div id="controls">
+        <span class="minimize"></span>
+        <span class="resize"></span>
+        <span class="close" id="close">X</span>
+    </div>
+</div>
+
+<h1>Test!</h1>
+
+<script type='text/javascript' src='http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+<script>
+    $('#close').click(function () {
+        panel.quit();
+    });
+</script>
+</body>
+</html>

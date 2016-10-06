@@ -2,8 +2,8 @@ group 'net.d4rkfly3r.irc'
 version '1.0-SNAPSHOT'
 
 task wrapper(type: Wrapper) {
-  gradleVersion = '2.13'
-  distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
+    gradleVersion = '2.13'
+    distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
 }
 
 apply plugin: 'java'
@@ -17,4 +17,5 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
     compile group: 'com.google.code.findbugs', name: 'findbugs', version: '3.0.1'
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.6.2'
 }
