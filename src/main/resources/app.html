@@ -36,35 +36,50 @@
                 </ul>
             </div>
         </td>
-        <td id="messages">
-
+        <td id="chat">
+            <table>
+                <tr>
+                    <td id="messages">
+                    </td>
+                </tr>
+                <tr>
+                    <td id="message-controls">
+                        <input type="text" id="message-input" title="Enter a message!"
+                               placeholder="Enter a message here!">
+                        <button id="message-send" class="button"><i class="fa fa-arrow-right" aria-hidden="true"></i>
+                        </button>
+                    </td>
+                </tr>
+            </table>
         </td>
     </tr>
 </table>
-<!--<div class="wrapper">-->
-<!--<div id="top-info">-->
-<!--<div id="channels-controls">-->
-<!--<button>Controls</button>-->
-<!--</div>-->
-<!--<div id="channel-info">-->
-<!--<h3>info</h3>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div id="content">-->
-<!--<div id="channels">-->
-<!--1<br/>2-->
-<!--</div>-->
-<!--<div id="messages">-->
-<!--MESSAGES<br/>MESSAGES-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--<script type='text/javascript' src='http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js'></script>-->
+<script type='text/javascript' src='http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 <script>
     $('#close').click(function () {
         panel.quit();
     });
+
+    var $messages = $('#messages');
+    var getMessages = function () {
+        if (link != undefined) {
+            var messages = link.getMessages();
+            for (var i = 0; i < messages.length; i++) {
+                var messageData = JSON.parse(messages[i]);
+                if (messageData.type == "chat") {
+                    var newMessage = $('<div class="message"> <span class="timestamp">' + messageData.timestamp + '</span> <span class="username">' + messageData.username + '</span> <span class="message">' + messageData.message + '</span> </div> ');
+                    $messages.append(newMessage);
+                }
+                if (messageData.type == "join") {
+                    var newMessage = $('<div class="message"> <span class="timestamp">' + messageData.timestamp + '</span> <span style="color:red;">==</span> <span class="username">' + messageData.username + '</span> <span class="message">' + messageData.message + '</span> </div> ');
+                    $messages.append(newMessage);
+                }
+            }
+        }
+    };
+    setInterval(getMessages, 100);
+    getMessages();
 </script>
 </body>
 </html>

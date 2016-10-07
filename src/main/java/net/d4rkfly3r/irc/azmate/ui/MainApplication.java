@@ -13,15 +13,19 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import net.d4rkfly3r.irc.azmate.Azmate;
+import net.d4rkfly3r.irc.azmate.events.AzmatePageLoadedEvent;
 import net.d4rkfly3r.irc.azmate.events.WindowCloseEvent;
 import net.d4rkfly3r.irc.azmate.plugins.PluginBus;
 import netscape.javascript.JSObject;
 
 import javax.swing.*;
+import java.util.concurrent.BlockingDeque;
+import java.util.concurrent.LinkedBlockingDeque;
 
 public class MainApplication extends Application {
 
-    private final WebView webView;
+    public final BlockingDeque<String> executes = new LinkedBlockingDeque<>();
+    public final WebView webView;
 
     public MainApplication() {
         this.webView = new WebView();
@@ -30,6 +34,9 @@ public class MainApplication extends Application {
         webView.getEngine().getLoadWorker().stateProperty().addListener((observable, oldValue, newValue) -> {
             JSObject window = (JSObject) webView.getEngine().executeScript("window");
             window.setMember("java", this);
+            PluginBus.getInstance().fireEvent(new AzmatePageLoadedEvent(this));
+//            String timestamp = "22:54", username = "d4rkfly3r", message = "Hello there @d4rk!";
+//            window.call("addMessage", timestamp, username, message);
         });
         webView.getEngine().load(Azmate.class.getResource("/app.html").toExternalForm());
 
@@ -72,6 +79,13 @@ public class MainApplication extends Application {
         root.getStylesheets().add(Azmate.class.getResource("/css/java.css").toExternalForm());
         primaryStage.setScene(root);
         primaryStage.show();
+//        Platform.runLater(() -> {
+//            while (true) {
+//                if (!executes.isEmpty()) {
+//                    webView.getEngine().executeScript(executes.poll());
+//                }
+//            }
+//        });
     }
 
     public void quit() {

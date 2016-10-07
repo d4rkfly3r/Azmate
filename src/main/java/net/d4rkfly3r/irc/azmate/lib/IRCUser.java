@@ -1,5 +1,7 @@
 package net.d4rkfly3r.irc.azmate.lib;
 
+import javax.annotation.Nonnull;
+
 /**
  * Represents a user on the IRC server.
  */
@@ -427,5 +429,13 @@ public final class IRCUser {
      */
     protected void updateUser(final IRCUser IRCUser) {
         //TODO: Unfinished method?
+    }
+
+    @Nonnull
+    public String getPreferredName() {
+        if (this.nick != null) {
+            return nick;
+        }
+        return this.userName;
     }
 }
