@@ -1,5 +1,6 @@
 package net.d4rkfly3r.irc.azmate;
 
+import com.google.gson.Gson;
 import javafx.application.Application;
 import net.d4rkfly3r.irc.azmate.annotations.Listener;
 import net.d4rkfly3r.irc.azmate.annotations.Plugin;
@@ -11,9 +12,9 @@ import net.d4rkfly3r.irc.azmate.lib.IRCNickNameException;
 import net.d4rkfly3r.irc.azmate.lib.IRCPasswordException;
 import net.d4rkfly3r.irc.azmate.plugins.events.*;
 import net.d4rkfly3r.irc.azmate.ui.MainApplication;
-import net.d4rkfly3r.irc.azmate.ui.SplashScreen;
 import netscape.javascript.JSObject;
 
+import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,21 +24,26 @@ import java.util.Date;
 @Plugin
 public class Azmate {
 
-    IRCConnection ircConnection;
-    SplashScreen splashScreen;
+    private IRCChannel testChannel;
+    private IRCConnection ircConnection;
+    private String defChannel;
     private MainApplication mainApplication = null;
 
     private ArrayList<String> messages = new ArrayList<>();
 
     public Azmate() {
-        this.splashScreen = new SplashScreen();
-        this.splashScreen.loading();
-        this.splashScreen.text("Loading fonts!");
         Toolkit.getDefaultToolkit();
-        this.splashScreen.text("Making connection!");
         ircConnection = new IRCConnection("irc.esper.net");
-        ircConnection.setUsername("d4rkfly3r");
-        ircConnection.setNick("d4rkfly3r");
+        ircConnection.setUsername(JOptionPane.showInputDialog(null, "Please enter your username!"));
+        ircConnection.setNick(JOptionPane.showInputDialog(null, "Please enter your nickname!"));
+        this.defChannel = JOptionPane.showInputDialog(null, "Please enter the channel you would like to join (no # symbol)!");
+    }
+
+    private static String padLeft(int length, String mod, String initial) {
+        while (initial.length() < length) {
+            initial = mod + initial;
+        }
+        return initial;
     }
 
     @Listener
@@ -47,7 +53,6 @@ public class Azmate {
 
     @Listener
     public void onPluginInit(PluginInitEvent event) {
-        this.splashScreen.loaded();
         new Thread(() -> Application.launch(MainApplication.class)).start();
         attemptConnection();
     }
@@ -55,7 +60,7 @@ public class Azmate {
     private void attemptConnection() {
         try {
             ircConnection.connect();
-            IRCChannel testChannel = ircConnection.createChannel("joshtest");
+            testChannel = ircConnection.createChannel(defChannel);
             testChannel.join();
             System.out.println("IRC Client Connected & Channel Joined!");
         } catch (IOException e) {
@@ -69,29 +74,23 @@ public class Azmate {
 
     @Listener
     public void onMessageEvent(MessageEvent event) {
-        System.out.println(event.getSender() + ": " + event.getMessage());
-        messages.add("{ \"type\":\"chat\",\"timestamp\":\"" + padLeft(2, "0", String.valueOf(new Date().getHours())) + ":" + padLeft(2, "0", String.valueOf(new Date().getMinutes())) + "\",\"username\":\"" + event.getSender().getPreferredName() + "\",\"message\":\"" + event.getMessage() + "\"}");
-    }
-
-    private String padLeft(int length, String mod, String initial) {
-        while (initial.length() < length) {
-            initial = mod + initial;
-        }
-        return initial;
+        final String e = new Message("chat", event.getSender().getPreferredName(), event.getMessage()).toJSON();
+        System.out.println(e);
+        messages.add(e);
     }
 
     @Listener
     public void onUserJoinEvent(UserJoinedEvent event) {
-        System.out.println(event.getChannel() + " | " + event.getSender());
-        final String e = "{ \"type\":\"join\",\"timestamp\":\"" + padLeft(2, "0", String.valueOf(new Date().getHours())) + ":" + padLeft(2, "0", String.valueOf(new Date().getMinutes())) + "\",\"username\":\"" + event.getSender().getPreferredName() + "\",\"message\":\"[" + event.getSender().getUserName() + "@" + event.getSender().getHostName() + "]\"}";
+        final String e = new Message("join", event.getSender().getPreferredName(), "[" + event.getSender().getUserName() + "@" + event.getSender().getHostName() + "] has joined " + event.getChannel()).toJSON();
         System.out.println(e);
         messages.add(e);
-
     }
 
     @Listener
-    public void onUserPartEvent(UserPartedEvent event) {
-        System.out.println(event.getChannel() + " | " + event.getSender() + " | " + event.getMessage());
+    public void onUserQuitEvent(UserQuitEvent event) {
+        final String e = new Message("quit", event.getQuitter().getPreferredName(), event.getMessage()).toJSON();
+        System.out.println(e);
+        messages.add(e);
     }
 
     @Listener
@@ -108,6 +107,45 @@ public class Azmate {
         System.exit(0);
     }
 
+    public static class Message {
+        private static final Gson builder = new Gson();
+        private final String type;
+        private final String timestamp;
+        private final String username;
+        private final String message;
+
+        public Message(String type, String username, String message) {
+            this(type, padLeft(2, "0", String.valueOf(new Date().getHours())) + ":" + padLeft(2, "0", String.valueOf(new Date().getMinutes())), username, message);
+        }
+
+        public Message(String type, String timestamp, String username, String message) {
+            this.type = type;
+            this.timestamp = timestamp;
+            this.username = username;
+            this.message = message;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public String getTimestamp() {
+            return timestamp;
+        }
+
+        public String getUsername() {
+            return username;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public String toJSON() {
+            return builder.toJson(this);
+        }
+    }
+
     public class Link {
         public Object[] getMessages() {
             final Object[] messages = Azmate.this.messages.toArray();
@@ -121,6 +159,13 @@ public class Azmate {
             } else {
                 System.out.println(data);
             }
+        }
+
+        public void sendMessage(String message) {
+            Azmate.this.testChannel.send(message);
+            final String e = new Message("chat", ircConnection.getClient().getPreferredName(), message).toJSON();
+            System.err.println(e);
+            messages.add(e);
         }
     }
 }

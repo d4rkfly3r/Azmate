@@ -29,7 +29,7 @@ public class MainApplication extends Application {
 
     public MainApplication() {
         this.webView = new WebView();
-        this.webView.setContextMenuEnabled(true);
+        this.webView.setContextMenuEnabled(false);
         this.webView.getEngine().setOnAlert(event -> JOptionPane.showMessageDialog(null, event.getData()));
         webView.getEngine().getLoadWorker().stateProperty().addListener((observable, oldValue, newValue) -> {
             JSObject window = (JSObject) webView.getEngine().executeScript("window");

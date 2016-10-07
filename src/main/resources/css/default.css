@@ -5,7 +5,7 @@
 }
 
 #new-button {
-    background-color: #607625;
+    background-color: #63B538;
     color: #1A1A1A;
 }
 
@@ -13,7 +13,7 @@
 #new-button:focus,
 #new-button:visited,
 #new-button:active {
-    background-color: #4a5f22;
+    background-color: #3e7b28;
 }
 
 input[type="text"] {
@@ -34,7 +34,7 @@ input[type="text"] {
     display: inline-block;
     font-weight: bold;
     font-size: 16px;
-    background-color: #A6A6A6;
+    background-color: #D6D6D6;
 }
 
 .button:hover,
@@ -85,12 +85,12 @@ th, td {
 .left-sidebar {
     width: 200px;
     background-color: #1A1A1A;
-    border-right: 2px solid #832f24;
+    border-right: 2px solid #BF4333;
 }
 
 #top-info {
     height: 100px;
-    border-bottom: 2px solid #832f24;
+    border-bottom: 2px solid #BF4333;
 }
 
 #channels {
@@ -102,11 +102,11 @@ th, td {
 }
 
 #channels > .server > h2 {
-    color: #707070;
+    color: #353535;
 }
 
 #channels > .server > ul {
-    color: #a6a6a6;
+    color: #D6D6D6;
 }
 
 #channels > .server > ul > li:before {
@@ -115,16 +115,16 @@ th, td {
 }
 
 #channel-info > h6 {
-    color: #707070;
+    color: #7b7b7b;
     text-transform: uppercase;
 }
 
 #channel-info > h1 {
-    color: #607625;
+    color: #63B538;
 }
 
 #channel-info > p {
-    color: #A6A6A6;
+    color: #D6D6D6;
 }
 
 #message-input {
@@ -162,11 +162,11 @@ th, td {
     margin-right: auto;}
 
 .message > * {
-    color: #a6a6a6;
+    color: #D6D6D6;
 }
 
 .timestamp {
-    color: #707070;
+    color: #7b7b7b;
     width: 70px;
 }
 

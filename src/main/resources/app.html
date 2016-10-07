@@ -19,7 +19,7 @@
         </td>
         <td id="channel-info">
             <h6>CHANNEL</h6>
-            <h1>#FoxDen</h1>
+            <h1>#joshtest</h1>
             <p>This is an example Topic!</p>
         </td>
     </tr>
@@ -40,6 +40,7 @@
             <table>
                 <tr>
                     <td id="messages">
+
                     </td>
                 </tr>
                 <tr>
@@ -54,7 +55,7 @@
         </td>
     </tr>
 </table>
-<script type='text/javascript' src='http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js'></script>
+<!--<script type='text/javascript' src='http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js'></script>-->
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 <script>
     $('#close').click(function () {
@@ -62,7 +63,7 @@
     });
 
     var $messages = $('#messages');
-    var getMessages = function () {
+    function getMessages0() {
         if (link != undefined) {
             var messages = link.getMessages();
             for (var i = 0; i < messages.length; i++) {
@@ -75,11 +76,37 @@
                     var newMessage = $('<div class="message"> <span class="timestamp">' + messageData.timestamp + '</span> <span style="color:red;">==</span> <span class="username">' + messageData.username + '</span> <span class="message">' + messageData.message + '</span> </div> ');
                     $messages.append(newMessage);
                 }
+                if (messageData.type == "quit") {
+                    var newMessage = $('<div class="message"> <span class="timestamp">' + messageData.timestamp + '</span> <span style="color:red;">==</span> <span class="username">' + messageData.username + '</span> <span class="message">' + messageData.message + '</span> </div> ');
+                    $messages.append(newMessage);
+                }
             }
         }
+    }
+    setInterval(getMessages0, 100);
+    getMessages0();
+
+    var $message = $('#message-input');
+    var sendMessage0 = function () {
+        link.sendMessage($message.val());
+        $message.val("");
     };
-    setInterval(getMessages, 100);
-    getMessages();
+    $('#message-send').click(sendMessage0);
+    $message.on('keypress', function (e) {
+        if (e.which === 13) {
+            sendMessage0();
+        }
+    });
+
+//    for (var l = 0; l < 50; l++) {
+//        var messageData = {
+//            timestamp: "01:07",
+//            username: ""
+//        };
+//        var newMessage = $('<div class="message"> <span class="timestamp">' + messageData.timestamp + '</span> <span class="username">' + messageData.username + '</span> <span class="message">' + messageData.message + '</span> </div> ');
+//        $messages.append(newMessage);
+//    }
+
 </script>
 </body>
 </html>

@@ -19,3 +19,9 @@ dependencies {
     compile group: 'com.google.code.findbugs', name: 'findbugs', version: '3.0.1'
     compile group: 'com.google.code.gson', name: 'gson', version: '2.6.2'
 }
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'net.d4rkfly3r.irc.azmate.MainClass'
+    }
+}
