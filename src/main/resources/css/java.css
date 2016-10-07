@@ -3,6 +3,13 @@
     -fx-label-padding: 0px 5px;
 }
 
-.title {
+#title {
     -fx-text-fill: rgb(130, 130, 130);
+}
+
+#toolbar {
+    -fx-background-color: #1A1A1A;
+    -fx-border-style: hidden hidden solid hidden;
+    -fx-border-width: 3px;
+    -fx-border-color: #607625;
 }

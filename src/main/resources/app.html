@@ -4,21 +4,62 @@
     <meta charset="UTF-8">
     <title>Azmate</title>
     <link rel="stylesheet" href="css/default.css">
+    <script src="https://use.fontawesome.com/6e38690496.js"></script>
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <![endif]-->
 </head>
 <body>
+<table>
+    <tr id="top-info">
+        <td class="left-sidebar" id="channels-controls">
+            <button class="button" id="new-button">NEW <i class="fa fa-plus" aria-hidden="true"></i></button>
+            <button class="button"><i class="fa fa-globe" aria-hidden="true"></i></button>
+            <button class="button"><i class="fa fa-cog" aria-hidden="true"></i></button>
+        </td>
+        <td id="channel-info">
+            <h6>CHANNEL</h6>
+            <h1>#FoxDen</h1>
+            <p>This is an example Topic!</p>
+        </td>
+    </tr>
+    <tr id="content">
+        <td class="left-sidebar" id="channels">
+            <div class="server">
+                <h2>Esper</h2>
+                <ul class="server-channels">
+                    <li>FoxDen</li>
+                    <li>Qixalite</li>
+                    <li>Qixalite-Dev</li>
+                    <li>Sponge</li>
+                    <li>Sponge-Dev</li>
+                </ul>
+            </div>
+        </td>
+        <td id="messages">
 
-<div id="window-head" draggable="true">
-    <div id="title">Azmate</div>
-    <div id="controls">
-        <span class="minimize"></span>
-        <span class="resize"></span>
-        <span class="close" id="close">X</span>
-    </div>
-</div>
-
-<h1>Test!</h1>
-
-<script type='text/javascript' src='http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js'></script>
+        </td>
+    </tr>
+</table>
+<!--<div class="wrapper">-->
+<!--<div id="top-info">-->
+<!--<div id="channels-controls">-->
+<!--<button>Controls</button>-->
+<!--</div>-->
+<!--<div id="channel-info">-->
+<!--<h3>info</h3>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div id="content">-->
+<!--<div id="channels">-->
+<!--1<br/>2-->
+<!--</div>-->
+<!--<div id="messages">-->
+<!--MESSAGES<br/>MESSAGES-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<script type='text/javascript' src='http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js'></script>-->
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 <script>
     $('#close').click(function () {

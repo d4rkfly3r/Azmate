@@ -49,12 +49,13 @@ public class MainApplication extends Application {
 
 
         BorderPane toolBar = new BorderPane();
+        toolBar.setId("toolbar");
         toolBar.setPrefHeight(30);
         toolBar.setPrefWidth(primaryStage.getWidth());
 
         Label title = new Label("Azmate");
         title.setFont(Font.loadFont(Azmate.class.getResource("/fonts/HeadlineNEWS.ttf").toExternalForm(), 26));
-        title.getStyleClass().add("title");
+        title.setId("title");
 
         HBox controls = new HBox();
         final Label closeButton = FontAwesome.createIcon(FontAwesome.REMOVE, false);
